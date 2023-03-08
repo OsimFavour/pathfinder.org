@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, abort
+from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date
@@ -57,7 +57,7 @@ class BlogPost(db.Model):
     # Create reference to the User object, the "posts" refers
     # to the post property in the user class.
     author = relationship("User", back_populates="posts")
-    title = db.Column(db.String(250), unique=True, nullable=False)
+    title = db.Column(db.String(250), nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
@@ -100,7 +100,8 @@ def admin_only(f):
 
 @app.route('/')
 def get_all_posts():
-    posts = BlogPost.query.all()
+    page = request.args.get("page", 1, type=int)
+    posts = BlogPost.query.paginate(page=page, per_page=5)
     return render_template("index.html", all_posts=posts, current_user=current_user)
 
 
