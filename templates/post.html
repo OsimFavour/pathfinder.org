@@ -17,7 +17,7 @@
 
               <!-- Changed from post.author as post.author is now a User object. -->
               <a href="#">{{post.author.name}}</a>
-              on {{post.date}}</span>
+              on {{post.date.strftime("%B %d, %Y")}}</span>
           </div>
         </div>
       </div>

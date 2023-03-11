@@ -11,6 +11,10 @@ class CreatePostForm(FlaskForm):
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
 
+ 
+class SearchForm(FlaskForm):
+    searched = StringField("Searched", validators=[DataRequired()])
+    
 
 class RegisterForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])

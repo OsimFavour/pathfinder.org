@@ -6,9 +6,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm, SearchForm
 from flask_gravatar import Gravatar
 from functools import wraps
+from datetime import datetime
+from bs4 import BeautifulSoup
+
 
 app = Flask(__name__)
 app.app_context().push()
@@ -59,7 +62,7 @@ class BlogPost(db.Model):
     author = relationship("User", back_populates="posts")
     title = db.Column(db.String(250), nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
     #****Parent Relationship of Comment Class****#
@@ -98,11 +101,31 @@ def admin_only(f):
     return decorated_function
 
 
+# Passing searched data to the navbar
+@app.context_processor
+def base():
+    form = SearchForm()
+    return dict(form=form)
+
+
 @app.route('/')
 def get_all_posts():
     page = request.args.get("page", 1, type=int)
-    posts = BlogPost.query.paginate(page=page, per_page=5)
+    posts = BlogPost.query.order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
     return render_template("index.html", all_posts=posts, current_user=current_user)
+
+
+@app.route("/search", methods=["POST"])
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        searched_post = form.searched.data
+        # We are searching the body i.e the content of the post
+        # We put the % sign to help us search for multiple things
+        posts = BlogPost.query.filter(BlogPost.body.like("%" + searched_post + "%"))
+        # Returning the results by their titles
+        ordered_posts = posts.order_by(BlogPost.title).all()
+        return render_template("search.html", form=form, searched=searched_post, posts=ordered_posts)
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -191,14 +214,14 @@ def contact():
 @admin_only
 def add_new_post():
     form = CreatePostForm()
+    # soup = BeautifulSoup(form.body.data, "html.parser")
     if form.validate_on_submit():
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
             body=form.body.data,
             img_url=form.img_url.data,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            author=current_user
         )
         db.session.add(new_post)
         db.session.commit()
@@ -217,11 +240,12 @@ def edit_post(post_id):
         author=current_user,
         body=post.body
     )
+    soup = BeautifulSoup(edit_form.body.data, "html.parser")
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
-        post.body = edit_form.body.data
+        post.body = soup.text
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
