@@ -11,7 +11,6 @@ from flask_gravatar import Gravatar
 from functools import wraps
 from datetime import datetime
 from bs4 import BeautifulSoup
-from flask_paginate import Pagination, get_page_args
 
 
 app = Flask(__name__)
@@ -112,7 +111,6 @@ def base():
 @app.route('/')
 def get_all_posts():
     page = request.args.get("page", 1, type=int)
-    # page, per_page, offset = get_page_args(page_parameter=page, per_page_parameter=per_page)
     posts = BlogPost.query.order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
     return render_template("index.html", all_posts=posts, current_user=current_user)
 
@@ -203,7 +201,8 @@ def show_post(post_id):
 
 @app.route("/about")
 def about():
-    return render_template("about.html", current_user=current_user)
+    posts = BlogPost.query.order_by(BlogPost.date.desc())
+    return render_template("about.html", all_posts=posts, current_user=current_user)
 
 
 @app.route("/contact")
