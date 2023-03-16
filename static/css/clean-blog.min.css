@@ -158,3 +158,15 @@ h2.about-title {
     height: 80px;
     margin-top: 33px;
 }
+
+.space-bar {
+    margin-left: 120px !important;
+}
+
+.login-container {
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* i.e  100% of the height of the viewport*/
+    width: 200px;
+    height: 100vh;
+}
