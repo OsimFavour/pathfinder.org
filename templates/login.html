@@ -16,10 +16,51 @@
           </div>
         </div>
         <div class="col-md-4 mt-5">
-          <div class="card card-body">
+          <div class="card card-body form-signin w-100">
+              <form>
+                  <h1 class="h3 mb-4 fw-normal">Please sign in</h1>
+              
+                  <div class="form-floating mb-2 w-100">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Email address">
+                    <!-- <label for="floatingInput">Email address</label> -->
+                  </div>
+                  <div class="form-floating mb-2 w-100">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <!-- <label for="floatingPassword">Password</label> -->
+                  </div>
+                  
+                  <div class="loginbox-forgot mb-2">
+                      <a href="">Forgot Password?</a>
+                  </div>
 
+                  <!-- <div class="checkbox mb-3">
+                    <label>
+                      <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                  </div> -->
+
+                  <div>
+                      <button class="w-100 button btn-lg btn-primary mb-2" type="submit"><div style="font-weight: 500; font-size: 20px; margin-top: -15px !important;">Sign in</div></button>
+                  </div>
+                  
+                  <div class="w-100">
+                      <button type="submit" class="google w-100" style="background-color: white;">
+                          <img class="google-img" style="border: 0px;" src="{{ url_for('static', filename='img/google-button.png')}}" alt="google button">
+                      </button>
+                      <!-- <a href="">
+                          <img class="w-100 google-img" src="images\google_signin_buttons\web\1x\btn_google_signin_light_normal_web.png" alt="google button">
+                      </a> -->
+                      <!-- <button class="w-100 btn btn-lg btn-light" type="submit">Sign in with google</button> -->
+                  </div>
+                  <hr>
+                  <div>
+                      <small class="text-muted">
+                          Need An Account? <a class="ml-2" href="#">Sign Up Now</a>
+                      </small>
+                  </div>
+                </form>
           </div>
-        </div>
+      </div>
       </div>
     </div>
   
