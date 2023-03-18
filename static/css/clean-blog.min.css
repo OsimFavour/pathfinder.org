@@ -188,6 +188,14 @@ form {
     /* height: 40px; */
 }
 
+.google:active, .google:focus, .google:hover {
+    color:#fff;
+    outline: none;
+    /* background-color:#0b5ed7 !important; */
+    border-color: #eee !important;
+    
+}
+
 .loginbox-forgot {
     font-size: 14px;
 }
@@ -272,5 +280,6 @@ form {
 
   .button:active, .button:focus, .button:hover {
     color:#fff;
+    outline: none;
     background-color:#0b5ed7!important;
     border-color:#0a53be!important}
