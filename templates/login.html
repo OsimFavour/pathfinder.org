@@ -4,54 +4,48 @@
 {% block content %}
 {% include "header.html" %}
 
+<style>
+  * {
+    margin: 0;
+  }
+</style>
+
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/login.jpg')}})">
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/sign-in.jpg')}})">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <div class="page-heading">
-            <h1>Log In</h1>
-            <span class="subheading">Welcome Back!</span>
+          <div class="login-heading page-heading">
+            <h1 class="cursive-logo">pathfinder.com</h1>
+            <span class="subheading">Discover, Cultivate & Deploy purposefully!</span>
           </div>
         </div>
-        <div class="col-md-4 mt-5">
-          <div class="card card-body form-signin w-100">
+        <div class="login-form col-md-4 mt-5">
+          <div class="login-card card card-body form-signin w-100">
               <form>
-                  <h1 class="h3 mb-4 fw-normal">Please sign in</h1>
+                  <h1 class="h3 mb-4 mx-4 fw-normal">Please sign in.</h1>
               
                   <div class="form-floating mb-2 w-100">
                     <input type="email" class="form-control" id="floatingInput" placeholder="Email address">
-                    <!-- <label for="floatingInput">Email address</label> -->
                   </div>
                   <div class="form-floating mb-2 w-100">
                     <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <!-- <label for="floatingPassword">Password</label> -->
                   </div>
                   
                   <div class="loginbox-forgot mb-2">
                       <a href="">Forgot Password?</a>
                   </div> 
 
-                  <!-- <div class="checkbox mb-3">
-                    <label>
-                      <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                  </div> -->
-
                   <div>
-                      <button class="w-100 button btn-lg btn-primary mb-2" type="submit"><div style="font-weight: 500; font-size: 20px; margin-top: -15px !important;">Sign in</div></button>
+                      <button class="w-100 button btn-lg btn-primary me-6 mb-2 mx-auto" type="submit"><div class="sign-in">Sign in</div></button>
                   </div>
                   
                   <div class="w-100">
-                      <button type="submit" class="google w-100" style="background-color: white;">
-                          <img class="google-img" style="border: 0px;" src="{{ url_for('static', filename='img/google-button.png')}}" alt="google button">
+                      <button type="submit" class="google w-100">
+                          <img class="google-img" src="{{ url_for('static', filename='img/google-button2.png')}}" alt="google button">
                       </button>
-                      <!-- <a href="">
-                          <img class="w-100 google-img" src="images\google_signin_buttons\web\1x\btn_google_signin_light_normal_web.png" alt="google button">
-                      </a> -->
-                      <!-- <button class="w-100 btn btn-lg btn-light" type="submit">Sign in with google</button> -->
-                  </div>
+                    </div>
                   <hr>
                   <div>
                       <small class="text-muted">
