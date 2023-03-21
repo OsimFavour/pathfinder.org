@@ -152,7 +152,7 @@ def register():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for("get_all_posts"))
-    return render_template("register.html", form=form, current_user=current_user)
+    return render_template("register.html", title="Register", form=form, current_user=current_user)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -171,7 +171,7 @@ def login():
         else:
             login_user(user)
             return redirect(url_for("get_all_posts"))
-    return render_template("login.html", form=form, current_user=current_user)
+    return render_template("login.html", title="Login", form=form, current_user=current_user)
 
 
 @app.route('/logout')
