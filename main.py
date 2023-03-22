@@ -128,7 +128,7 @@ def search():
         return render_template("search.html", form=form, searched=searched_post, posts=ordered_posts)
 
 
-@app.route('/register', methods=["GET", "POST"])
+@app.route('/register', methods=["GET", "POST"]) 
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
