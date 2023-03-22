@@ -18,34 +18,35 @@
 
         <div class="login-form col-md-4 mt-5">
           <div class="login-card card card-body form-signin w-100">
-            <form action="">
+
+            <form method="POST" action="{{ url_for('register') }}">
               <h1 class="h3 mb-4 fw-normal">Create Your Account!</h1>
-              <div class="form-floating mb-2 w-100">
-                <input type="username" class="form-control" id="floatingInput" placeholder="Username">
-              </div>
-              <div class="form-floating mb-2 w-100">
-                <input type="email" class="form-control" id="floatingInput" placeholder="Email address">
-              </div>
-              <div class="form-floating mb-2 w-100">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              </div>
-              <div class="form-floating mb-4 w-100">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password">
-              </div>
-              <div>
-                <button class="w-100 button btn-lg btn-primary mb-2" type="submit"><div class="sign-in">Sign Up</div></button>
-            </div>
-            <div class="w-100 mb-2">
-              <button type="submit" class="google w-100">
-                  <img class="google-img" src="{{ url_for('static', filename='img/google-button2.png')}}" alt="google button">
-              </button>
-            </div>
-          <hr>
-          <div>
-              <small class="text-muted">
-                Already Have An Account?  <a class="ml-2" href="#">Sign In Here</a>
-              </small>
-          </div>
+
+                {{ form.hidden_tag() }}
+                <div class="form-floating mb-2 w-100">
+                  <input type="username" class="form-control" id="floatingInput" placeholder="Username", name="name">
+                </div>
+                <div class="form-floating mb-2 w-100">
+                  <input type="email" class="form-control" id="floatingInput" placeholder="Email address", name="email">
+                </div>
+                <div class="form-floating mb-2 w-100">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password", name="password">
+                </div>
+                <div class="form-floating mb-4 w-100">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password", name="confirm_password">
+                </div>
+                <div>
+                  <button class="w-100 button btn-lg btn-primary mb-2" type="submit"><div class="sign-in">Sign Up</div></button>
+                </div>
+                <div class="w-100 mb-2">
+                  <button type="submit" class="google w-100">
+                    <img class="google-img" src="{{ url_for('static', filename='img/google-button2.png')}}" alt="google button">
+                  </button>
+                </div>
+                <hr>
+                <small class="text-muted">
+                  Already Have An Account?  <a class="ml-2" href="{{ url_for('login') }}">Sign In Here</a>
+                </small>
             </form>
           </div>
         </div>
