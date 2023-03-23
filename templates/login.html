@@ -22,18 +22,52 @@
           </div>
         </div>
         <div class="login-form col-md-4 mt-5">
-          <div class="login-card card card-body form-signin w-100">
-              <form>
-                  <h1 class="h3 mb-4 mx-4 fw-normal">Please sign in.</h1>
-              
-                  <div class="form-floating mb-2 w-100">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="Email address">
+
+          <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
                   </div>
-                  <div class="form-floating mb-2 w-100">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                {% endfor %}
+              {% endif %}
+            {% endwith %} 
+          </div>
+
+          <div class="login-card card card-body form-signin w-100">
+      
+              <form method="POST", action="{{ url_for('login') }}">
+                  <h1 class="h3 mb-4 mx-4 fw-normal">Please sign in.</h1>
+                    {{ form.hidden_tag() }}
+                  
+                    <div class="form-floating mb-3 w-100">
+                      {% if form.email.errors %}
+                        <input type="email" class="form-control is-invalid" id="floatingInput" placeholder="Email address", name="email">
+                        <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                            <span><small style="font-size: 11px;">{{ error }}</small></span>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Email address", name="email">
+                      {% endif %}
+                    </div>
+
+                  <div class="form-floating mb-3 w-100">
+                    {% if form.password.errors %}
+                      <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Password", name="password">
+                      <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                          <span><small style="font-size: 11px; padding-top: 0px;">{{ error }}</small></span>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password", name="password">
+                    {% endif %}
                   </div>
                   
-                  <div class="loginbox-forgot mb-2">
+                  <div class="loginbox-forgot mt-1 mb-2">
                       <a href="">Forgot Password?</a>
                   </div> 
 
@@ -49,7 +83,7 @@
                   <hr>
                   <div>
                       <small class="text-muted">
-                          Need An Account? <a class="ml-2" href="#">Sign Up Now</a>
+                          Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
                       </small>
                   </div>
                 </form>
