@@ -59,7 +59,7 @@
                       <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Password", name="password">
                       <div class="invalid-feedback">
                         {% for error in form.password.errors %}
-                          <span><small style="font-size: 11px; padding-top: 0px;">{{ error }}</small></span>
+                          <span><small style="font-size: 11px;">{{ error }}</small></span>
                         {% endfor %}
                       </div>
                     {% else %}
