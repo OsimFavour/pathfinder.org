@@ -38,9 +38,9 @@ gravatar = Gravatar(app, size=100, rating="g", default="retro", force_default=Fa
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
     # This will act like a list of BlogPost objects attached
     # to each User. The "author" refers to the author property
@@ -48,6 +48,9 @@ class User(UserMixin, db.Model):
     posts = relationship("BlogPost", back_populates="author")
     comments = relationship("Comment", back_populates="comment_author")
 # db.create_all()   
+
+    def __repr__(self):
+        return f"User('{self.name}', '{self.email}', '{self.password}')"
 
 
 class BlogPost(db.Model):
@@ -69,6 +72,11 @@ class BlogPost(db.Model):
     comments = relationship("Comment", back_populates="parent_post")
 
 
+    def __repr__(self):
+        return f"Post('{self.author}', '{self.title}', '{self.date}')"
+    
+
+     
 class Comment(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
