@@ -1,0 +1,111 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/sign-in.jpg')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="login-heading page-heading">
+            <h1 class="cursive-logo">pathfinder.com</h1>
+            <span class="subheading">Discover, Cultivate & Deploy purposefully!</span>
+          </div>
+        </div>
+
+        <div class="login-form col-md-4 mt-5">
+          <div class="login-card card card-body form-signin w-100">
+
+            <form method="POST" action="{{ url_for('register') }}">
+              <h1 class="h3 mb-4 fw-normal">Create Your Account!</h1>
+
+                {{ form.hidden_tag() }}
+
+                <div class="form-floating mb-3 w-100">
+                  {% if form.name.errors %}
+                    <input type="username" class="form-control is-invalid" id="floatingInput" placeholder="Username", name="name">
+                    <div class="invalid-feedback">
+                      {% for error in form.name.errors %}
+                        <span><small style="font-size: 11px;">{{ error }}</small></span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <input type="username" class="form-control" id="floatingInput" placeholder="Username", name="name">
+                  {% endif %}
+                </div>
+
+                <div class="form-floating mb-3 w-100">
+                  {% if form.email.errors %}
+                    <input type="email" class="form-control is-invalid" id="floatingInput" placeholder="Email address", name="email">
+                    <div class="invalid-feedback">
+                      {% for error in form.email.errors %}
+                        <span><small style="font-size: 11px;">{{ error }}</small></span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Email address", name="email">
+                  {% endif %}
+                </div>
+
+                <div class="form-floating mb-3 w-100">
+                  {% if form.password.errors %}
+                    <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Password", name="password">
+                    <div class="invalid-feedback">
+                      {% for error in form.password.errors %}
+                        <span><small style="font-size: 11px;">{{ error }}</small></span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password", name="password">
+                  {% endif %}
+                </div>
+
+                <div class="form-floating mb-5 w-100">
+                  {% if form.confirm_password.errors %}
+                    <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Confirm Password", name="confirm_password">
+                    <div class="invalid-feedback">
+                      {% for error in form.confirm_password.errors %}
+                        <span><small style="font-size: 11px;">{{ error }}</small></span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password", name="confirm_password">
+                  {% endif %}
+                </div>
+
+                <div>
+                  <button class="w-100 button btn-lg btn-primary mb-2" type="submit"><div class="sign-in">Sign Up</div></button>
+                </div>
+                <div class="w-100 mb-2">
+                  <button type="submit" class="google w-100">
+                    <img class="google-img" src="{{ url_for('static', filename='img/google-button2.png')}}" alt="google button">
+                  </button>
+                </div>
+                <hr>
+                <small class="text-muted">
+                  Already Have An Account?  <a class="ml-2" href="{{ url_for('login') }}">Sign In Here</a>
+                </small>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+
+  <!-- <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+       
+       {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+      </div>
+    </div>
+  </div> -->
+
+{% include "footer.html" %}
+{% endblock %}
+
+</header>

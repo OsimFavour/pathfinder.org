@@ -1,0 +1,121 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+<style>
+  * {
+    margin: 0;
+  }
+</style>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/sign-in.jpg')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="login-heading page-heading">
+            <h1 class="cursive-logo">pathfinder.com</h1>
+            <span class="subheading">Discover, Cultivate & Deploy purposefully!</span>
+          </div>
+        </div>
+        <div class="login-form col-md-4 mt-5">
+
+          <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %} 
+          </div>
+
+          <div class="login-card card card-body form-signin w-100">
+      
+              <form method="POST", action="">
+                  <h1 class="h3 mb-4 mx-4 fw-normal">Please sign in.</h1>
+                    {{ form.hidden_tag() }}
+                  
+                    <div class="form-floating mb-3 w-100">
+                      {% if form.email.errors %}
+                        <input type="email" class="form-control is-invalid" id="floatingInput" placeholder="Email address", name="email">
+                        <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                            <span><small style="font-size: 11px;">{{ error }}</small></span>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Email address", name="email">
+                      {% endif %}
+                    </div>
+
+                  <div class="form-floating mb-3 w-100">
+                    {% if form.password.errors %}
+                      <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Password", name="password">
+                      <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                          <span><small style="font-size: 11px;">{{ error }}</small></span>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password", name="password">
+                    {% endif %}
+                  </div>
+                  
+                  <div class="loginbox-forgot mt-1 mb-2">
+                      <a href="">Forgot Password?</a>
+                  </div> 
+
+                  <div>
+                      <button class="w-100 button btn-lg btn-primary me-6 mb-2 mx-auto" type="submit"><div class="sign-in">Sign in</div></button>
+                  </div>
+                  
+                  <div class="w-100">
+                      <button type="submit" class="google w-100">
+                          <img class="google-img" src="{{ url_for('static', filename='img/google-button2.png')}}" alt="google button">
+                      </button>
+                    </div>
+                  <hr>
+                  <div>
+                      <small class="text-muted">
+                          Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+                      </small>
+                  </div>
+                </form>
+          </div>
+      </div>
+      </div>
+    </div>
+  
+
+  <!-- <div class="container">
+    <div class="row">
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+      </div>
+    </div>
+  </div> -->
+
+
+{% include "footer.html" %}
+{% endblock %}
+
+</header>
