@@ -120,7 +120,7 @@ def show_post(post_id):
         )
         db.session.add(new_comment)
         db.session.commit()
-    return render_template("post.html", form=form, post=requested_post, current_user=current_user)
+    return render_template("post.html", form=form, post=requested_post, title=requested_post.title, current_user=current_user)
 
 
 @app.route("/about")
