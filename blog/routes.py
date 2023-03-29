@@ -1,7 +1,8 @@
-from flask import render_template, redirect, url_for, flash, abort, request
+from io import BytesIO
+from flask import render_template, redirect, url_for, flash, abort, request, send_file
 from blog import app, db, login_manager
 from blog.forms import CreatePostForm, RegisterForm, LoginForm, CommentForm, SearchForm
-from blog.models import User, BlogPost, Comment
+from blog.models import User, BlogPost, PurposePost, RelationshipPost, Fiction, Newsletter, Upload, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -10,7 +11,7 @@ from bs4 import BeautifulSoup
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(int(user_id)) 
 
 
 def admin_only(f):
@@ -29,11 +30,61 @@ def base():
     return dict(form=form)
 
 
+# @app.route('/')
+# def home():
+#     page = request.args.get("page", 1, type=int)
+#     posts = BlogPost.query.order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
+#     return render_template("index.html", all_posts=posts, current_user=current_user)
+
+
 @app.route('/')
 def home():
+    return render_template("about.html", current_user=current_user)
+
+
+@app.route("/purpose")
+def purpose():
     page = request.args.get("page", 1, type=int)
-    posts = BlogPost.query.order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
-    return render_template("index.html", all_posts=posts, current_user=current_user)
+    posts = PurposePost.query.order_by(PurposePost.date.desc()).paginate(page=page, per_page=5)
+    return render_template("purpose_post.html", all_posts=posts, current_user=current_user)
+    
+
+@app.route("/relationship")
+def relationship():
+    page = request.args.get("page", 1, type=int)
+    posts = RelationshipPost.query.order_by(RelationshipPost.date.desc()).paginate(page=page, per_page=5)
+    return render_template("relationship.html", all_posts=posts, current_user=current_user)
+
+
+@app.route("/fiction")
+def fiction():
+    page = request.args.get("page", 1, type=int)
+    posts = Fiction.query.order_by(Fiction.date.desc()).paginate(page=page, per_page=5)
+    return render_template("fictions.html", all_posts=posts, current_user=current_user)
+
+
+@app.route("/newsletter")
+def newsletter():
+    page = request.args.get("page", 1, type=int)
+    posts = Newsletter.query.order_by(Newsletter.date.desc()).paginate(page=page, per_page=5)
+    return render_template("newletters.html", all_posts=posts)
+
+
+@app.route("/my-books", methods=["GET", "POST"])
+def others():
+    if request.method == "POST":
+        file = request.files["file"]
+        upload = Upload(filename=file.filename, data=file.read())
+        db.session.add(upload)
+        db.session.commit()
+        return f"Uploaded: {file.filename}"
+    return render_template("others.html")
+
+
+@app.route("/download/<upload_id>")
+def download(upload_id):
+    upload = Upload.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.data), attachment_filename=upload.filename, as_attachment=True)
 
 
 @app.route("/search", methods=["POST"])
