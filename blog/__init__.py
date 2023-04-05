@@ -22,11 +22,12 @@ Bootstrap(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+from blog import routes
+
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
-
-from blog import routes
 
 gravatar = Gravatar(app, size=100, rating="g", default="retro", force_default=False, force_lower=False, use_ssl=False, base_url=None)
 
